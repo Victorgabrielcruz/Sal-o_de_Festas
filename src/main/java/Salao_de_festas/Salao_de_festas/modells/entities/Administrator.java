@@ -102,4 +102,28 @@ public class Administrator {
         }
         return false;
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public String getVenueAddress() {
+        return venueAddress;
+    }
+
+    public String getCnpj() {
+        return cnpj;
+    }
 }
