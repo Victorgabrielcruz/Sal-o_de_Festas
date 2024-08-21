@@ -31,6 +31,9 @@ public class Administrator {
     @Column(name = "cnpj", nullable = false)
     private String cnpj;
 
+    private String password;
+
+    //Actions
     /**
      * Constructs a new Administrator instance with the specified details.
      *
@@ -41,74 +44,18 @@ public class Administrator {
      * @throws IllegalArgumentException if any of the provided arguments are
      * invalid
      */
-    public Administrator(String name, String phone, String venueAddress, String cnpj) {
-        if (!setName(name) || !setPhone(phone) || !setVenueAddress(venueAddress) || !setCnpj(cnpj)) {
-            throw new IllegalArgumentException("Invalid arguments for creating Administrator");
-        }
+    public Administrator(String name, String phone, String venueAddress, String cnpj, String password) {
+        validarDados(name, phone, venueAddress, cnpj, password);
+        this.name = name;
+        this.phone = phone;
+        this.venueAddress = venueAddress;
+        this.cnpj = removeSpecialCharacters(cnpj);
+        this.password = password;
     }
 
-    /**
-     * Sets the name of the Administrator.
-     *
-     * @param name the name to be set
-     * @return true if the name is valid and was set, false otherwise
-     */
-    public boolean setName(String name) {
-        if (name != null && !name.isEmpty()) {
-            this.name = name;
-            return true;
-        }
-        return false;
-    }
-
-    /**
-     * Sets the phone number of the Administrator.
-     *
-     * @param phone the phone number to be set
-     * @return true if the phone number is valid and was set, false otherwise
-     */
-    public boolean setPhone(String phone) {
-        if (phone != null && !phone.isEmpty()) {
-            this.phone = phone;
-            return true;
-        }
-        return false;
-    }
-
-    /**
-     * Sets the address of the venue managed by the Administrator.
-     *
-     * @param venueAddress the address to be set
-     * @return true if the address is valid and was set, false otherwise
-     */
-    public boolean setVenueAddress(String venueAddress) {
-        if (venueAddress != null && !venueAddress.isEmpty()) {
-            this.venueAddress = venueAddress;
-            return true;
-        }
-        return false;
-    }
-
-    /**
-     * Sets the CNPJ of the Administrator.
-     *
-     * @param cnpj the CNPJ to be set
-     * @return true if the CNPJ is valid and was set, false otherwise
-     */
-    public boolean setCnpj(String cnpj) {
-        if (cnpj != null && !cnpj.isEmpty() && cnpj.length() >= 14 && cnpj.length() <= 18) {
-            this.cnpj = cnpj;
-            return true;
-        }
-        return false;
-    }
-
+    //Getters
     public int getId() {
         return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getName() {
@@ -125,5 +72,52 @@ public class Administrator {
 
     public String getCnpj() {
         return cnpj;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    //auxiliary functions
+    /**
+     * Removes special characters from a string, keeping letters and digits.
+     *
+     * @param input the string from which special characters will be removed
+     * @return a string containing only letters and digits
+     */
+    public String removeSpecialCharacters(String input) {
+        if (input != null) {
+            // Remove all non-alphanumeric characters (keeping letters and digits)
+            return input.replaceAll("[^a-zA-Z0-9]", "");
+        }
+        return null;
+    }
+
+    /**
+     * Validates the provided data.
+     *
+     * @param name the name of the Administrator
+     * @param phone the phone number of the Administrator
+     * @param venueAddress the address of the venue managed by the Administrator
+     * @param cnpj the CNPJ of the Administrator
+     * @throws IllegalArgumentException if any data is invalid
+     */
+    private void validarDados(String name, String phone, String venueAddress, String cnpj, String password) {
+        if (name == null || name.isEmpty()) {
+            throw new IllegalArgumentException("Name cannot be null or empty");
+        }
+        if (phone == null || phone.isEmpty()) {
+            throw new IllegalArgumentException("Phone cannot be null or empty");
+        }
+        if (venueAddress == null || venueAddress.isEmpty()) {
+            throw new IllegalArgumentException("Venue address cannot be null or empty");
+        }
+        cnpj = removeSpecialCharacters(cnpj);
+        if (cnpj == null || cnpj.isEmpty() || cnpj.length() != 14) {
+            throw new IllegalArgumentException("CNPJ must be 14 digits");
+        }
+        if (password == null || password.isEmpty()) {
+            throw new IllegalArgumentException("Password cannot be null or empty");
+        }
     }
 }

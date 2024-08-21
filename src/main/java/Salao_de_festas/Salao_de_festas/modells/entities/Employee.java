@@ -39,5 +39,91 @@ public class Employee {
     @ManyToMany(mappedBy = "employees")
     private List<Party> parties;
 
-    // Getters and setters
+    /**
+     * Constructs a new Employee instance with the specified details.
+     *
+     * @param name the name of the employee
+     * @param role the role of the employee
+     * @param cpf the CPF of the employee
+     * @param rg the RG of the employee
+     * @param salary the salary of the employee
+     * @param hourlyRate the hourly rate of the employee
+     * @throws IllegalArgumentException if any of the provided arguments are
+     * invalid
+     */
+    public Employee(String name, String role, String cpf, String rg, double salary, double hourlyRate) {
+        validarDados(name, role, cpf, rg, salary, hourlyRate);
+
+        this.name = name;
+        this.role = role;
+        this.cpf = cpf;
+        this.rg = rg;
+        this.salary = salary;
+        this.hourlyRate = hourlyRate;
+    }
+
+    /**
+     * Validates the provided data.
+     *
+     * @param name the name of the employee
+     * @param role the role of the employee
+     * @param cpf the CPF of the employee
+     * @param rg the RG of the employee
+     * @param salary the salary of the employee
+     * @param hourlyRate the hourly rate of the employee
+     * @throws IllegalArgumentException if any data is invalid
+     */
+    private void validarDados(String name, String role, String cpf, String rg, double salary, double hourlyRate) {
+        if (name == null || name.isEmpty()) {
+            throw new IllegalArgumentException("Name cannot be null or empty");
+        }
+        if (role == null || role.isEmpty()) {
+            throw new IllegalArgumentException("Role cannot be null or empty");
+        }
+        if (cpf == null || cpf.isEmpty() || cpf.length() != 11) {
+            throw new IllegalArgumentException("Invalid CPF: must have exactly 11 digits");
+        }
+        if (rg == null || rg.isEmpty() || rg.length() < 7 || rg.length() > 14) {
+            throw new IllegalArgumentException("Invalid RG: must have between 7 and 14 characters");
+        }
+        if (salary <= 0) {
+            throw new IllegalArgumentException("Salary must be greater than zero");
+        }
+        if (hourlyRate <= 0) {
+            throw new IllegalArgumentException("Hourly rate must be greater than zero");
+        }
+    }
+
+    // Getters
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public String getRg() {
+        return rg;
+    }
+
+    public double getSalary() {
+        return salary;
+    }
+
+    public double getHourlyRate() {
+        return hourlyRate;
+    }
+
+    public List<Party> getParties() {
+        return parties;
+    }
 }

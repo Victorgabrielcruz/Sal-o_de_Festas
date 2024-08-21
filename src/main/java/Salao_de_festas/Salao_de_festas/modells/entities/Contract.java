@@ -60,5 +60,117 @@ public class Contract {
     @Column(name = "total_amount", nullable = false)
     private double totalAmount;
 
-    // Getters and setters
+    /**
+     * Constructs a new Contract instance with the specified details.
+     *
+     * @param party the party associated with the contract
+     * @param employeeIds the list of employee IDs associated with the contract
+     * @param client the client associated with the contract
+     * @param administrator the administrator managing the contract
+     * @param startDate the start date of the contract
+     * @param endDate the end date of the contract
+     * @param startTime the start time of the contract
+     * @param endTime the end time of the contract
+     * @param totalAmount the total amount of the contract
+     * @throws IllegalArgumentException if any of the provided arguments are
+     * invalid
+     */
+    public Contract(Party party, List<Integer> employeeIds, Client client, Administrator administrator,
+            Date startDate, Date endDate, Date startTime, Date endTime, double totalAmount) {
+
+        validarDados(party, employeeIds, client, administrator, startDate, endDate, startTime, endTime, totalAmount);
+
+        this.party = party;
+        this.employeeIds = employeeIds;
+        this.client = client;
+        this.administrator = administrator;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.totalAmount = totalAmount;
+    }
+
+    /**
+     * Validates the provided data.
+     *
+     * @param party the party associated with the contract
+     * @param employeeIds the list of employee IDs
+     * @param client the client associated with the contract
+     * @param administrator the administrator managing the contract
+     * @param startDate the start date of the contract
+     * @param endDate the end date of the contract
+     * @param startTime the start time of the contract
+     * @param endTime the end time of the contract
+     * @param totalAmount the total amount of the contract
+     * @throws IllegalArgumentException if any data is invalid
+     */
+    private void validarDados(Party party, List<Integer> employeeIds, Client client, Administrator administrator,
+            Date startDate, Date endDate, Date startTime, Date endTime, double totalAmount) {
+        if (party == null) {
+            throw new IllegalArgumentException("Party cannot be null");
+        }
+        if (employeeIds == null || employeeIds.isEmpty()) {
+            throw new IllegalArgumentException("Employee IDs list cannot be null or empty");
+        }
+        if (client == null) {
+            throw new IllegalArgumentException("Client cannot be null");
+        }
+        if (administrator == null) {
+            throw new IllegalArgumentException("Administrator cannot be null");
+        }
+        if (startDate == null || endDate == null || startTime == null || endTime == null) {
+            throw new IllegalArgumentException("Date and time fields cannot be null");
+        }
+        if (endDate.before(startDate)) {
+            throw new IllegalArgumentException("End date cannot be before start date");
+        }
+        if (endTime.before(startTime)) {
+            throw new IllegalArgumentException("End time cannot be before start time");
+        }
+        if (totalAmount <= 0) {
+            throw new IllegalArgumentException("Total amount must be greater than zero");
+        }
+    }
+
+    // Getters
+    public int getId() {
+        return id;
+    }
+
+    public Party getParty() {
+        return party;
+    }
+
+    public List<Integer> getEmployeeIds() {
+        return employeeIds;
+    }
+
+    public Client getClient() {
+        return client;
+    }
+
+    public Administrator getAdministrator() {
+        return administrator;
+    }
+
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public Date getStartTime() {
+        return startTime;
+    }
+
+    public Date getEndTime() {
+        return endTime;
+    }
+
+    public double getTotalAmount() {
+        return totalAmount;
+    }
 }

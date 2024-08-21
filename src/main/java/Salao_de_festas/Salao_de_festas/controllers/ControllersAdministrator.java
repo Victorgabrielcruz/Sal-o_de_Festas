@@ -14,7 +14,7 @@ public class ControllersAdministrator {
 
     @PostMapping
     public Administrator Create(@RequestBody Administrator administrator) {
-        Administrator admin = new Administrator(administrator.getName(), administrator.getPhone(), administrator.getVenueAddress(), administrator.getCnpj());
+        Administrator admin = new Administrator(administrator.getName(), administrator.getPhone(), administrator.getVenueAddress(), administrator.getCnpj(), administrator.getPassword());
         return admin;
     }
 
