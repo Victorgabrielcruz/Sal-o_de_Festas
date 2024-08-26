@@ -10,30 +10,57 @@ import jakarta.persistence.Table;
 /**
  * Represents an Administrator entity in the system. This class is mapped to the
  * "Administrador" table in the database.
+ * <p>
+ * An Administrator manages the venue's details, such as its address and CNPJ.
+ * </p>
  */
 @Entity
 @Table(name = "Administrador")
 public class Administrator {
 
+    /**
+     * The unique identifier for the Administrator.
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    /**
+     * The name of the Administrator.
+     */
     @Column(name = "name", length = 100, nullable = false)
     private String name;
 
+    /**
+     * The phone number of the Administrator.
+     */
     @Column(name = "phone", nullable = false)
     private String phone;
 
+    /**
+     * The address of the venue managed by the Administrator.
+     */
     @Column(name = "venue_address", nullable = false)
     private String venueAddress;
 
+    /**
+     * The CNPJ of the Administrator, a unique identifier for businesses in
+     * Brazil.
+     */
     @Column(name = "cnpj", nullable = false)
     private String cnpj;
 
+    /**
+     * The password for the Administrator's account.
+     */
     private String password;
 
-    //Actions
+    /**
+     * Default constructor for JPA.
+     */
+    public Administrator() {
+    }
+
     /**
      * Constructs a new Administrator instance with the specified details.
      *
@@ -41,13 +68,10 @@ public class Administrator {
      * @param phone the phone number of the Administrator
      * @param venueAddress the address of the venue managed by the Administrator
      * @param cnpj the CNPJ of the Administrator
+     * @param password the password for the Administrator's account
      * @throws IllegalArgumentException if any of the provided arguments are
      * invalid
      */
-    public Administrator() {
-
-    }
-
     public Administrator(String name, String phone, String venueAddress, String cnpj, String password) {
         validarDados(name, phone, venueAddress, cnpj, password);
         this.name = name;
@@ -57,37 +81,67 @@ public class Administrator {
         this.password = password;
     }
 
-    //Getters
+    /**
+     * Returns the unique identifier for the Administrator.
+     *
+     * @return the id of the Administrator
+     */
     public int getId() {
         return id;
     }
 
+    /**
+     * Returns the name of the Administrator.
+     *
+     * @return the name of the Administrator
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Returns the phone number of the Administrator.
+     *
+     * @return the phone number of the Administrator
+     */
     public String getPhone() {
         return phone;
     }
 
+    /**
+     * Returns the address of the venue managed by the Administrator.
+     *
+     * @return the venue address of the Administrator
+     */
     public String getVenueAddress() {
         return venueAddress;
     }
 
+    /**
+     * Returns the CNPJ of the Administrator.
+     *
+     * @return the CNPJ of the Administrator
+     */
     public String getCnpj() {
         return cnpj;
     }
 
+    /**
+     * Returns the password for the Administrator's account.
+     *
+     * @return the password of the Administrator
+     */
     public String getPassword() {
         return password;
     }
 
-    //auxiliary functions
     /**
-     * Removes special characters from a string, keeping letters and digits.
+     * Removes special characters from a string, keeping only letters and
+     * digits.
      *
      * @param input the string from which special characters will be removed
-     * @return a string containing only letters and digits
+     * @return a string containing only letters and digits, or null if the input
+     * is null
      */
     public String removeSpecialCharacters(String input) {
         if (input != null) {
@@ -98,13 +152,17 @@ public class Administrator {
     }
 
     /**
-     * Validates the provided data.
+     * Validates the provided data to ensure that all fields are correctly
+     * populated.
      *
      * @param name the name of the Administrator
      * @param phone the phone number of the Administrator
      * @param venueAddress the address of the venue managed by the Administrator
      * @param cnpj the CNPJ of the Administrator
-     * @throws IllegalArgumentException if any data is invalid
+     * @param password the password for the Administrator's account
+     * @throws IllegalArgumentException if any data is invalid, such as an empty
+     * or null name, phone, venue address, password, or a CNPJ that does not
+     * have exactly 14 digits after removing special characters
      */
     private void validarDados(String name, String phone, String venueAddress, String cnpj, String password) {
         if (name == null || name.isEmpty()) {
