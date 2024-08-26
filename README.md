@@ -75,4 +75,3 @@ Fernando is an experienced event organizer who owns a party venue. To streamline
 - **rg:** Employee’s RG (general registration).
 - **salary:** Employee’s base salary.
 - **hourly_rate:** Hourly rate of pay for the employee.
-
