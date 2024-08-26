@@ -44,6 +44,10 @@ public class Administrator {
      * @throws IllegalArgumentException if any of the provided arguments are
      * invalid
      */
+    public Administrator() {
+
+    }
+
     public Administrator(String name, String phone, String venueAddress, String cnpj, String password) {
         validarDados(name, phone, venueAddress, cnpj, password);
         this.name = name;
